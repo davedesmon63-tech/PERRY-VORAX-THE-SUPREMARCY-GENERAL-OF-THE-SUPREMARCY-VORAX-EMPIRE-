@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PERRY VORAX THE SUPREMARCY GENERAL OF THE SUPREMARCY VORAX EMPIRE</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Rajdhani:wght@600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#000;color:#fff;overflow:hidden;font-family:'Rajdhani',sans-serif;display:flex;justify-content:center}
+.video-bg{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:65%;max-width:420px;height:75vh;object-fit:cover;z-index:1;border:2px solid #ff0000;border-radius:12px;box-shadow:0 0 30px rgba(255,0,0,0.5)}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:2;transition:all 0.5s}
+.lockScreen{position:fixed;inset:0;z-index:10;display:flex;flex-direction:column;justify-content:space-between;cursor:pointer;align-items:center}
+.lockTop{width:100%;background:rgba(0,0,0,0.85);border-bottom:2px solid #ff0000;padding:16px;text-align:center;display:flex;justify-content:space-between;align-items:center}
+.lockTop h1{font-family:Orbitron;color:#ff0000;font-size:11px;letter-spacing:2px;line-height:1.5;font-weight:900;flex:1}
+.soundBtn{background:#ff0000;color:#fff;border:none;padding:6px 12px;font-family:Orbitron;font-size:9px;font-weight:900;cursor:pointer;border-radius:20px;margin-left:10px}
+.codeBox{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#0a0a0a;border:2px solid #ff0000;padding:25px;width:90%;max-width:320px;display:none;z-index:100;text-align:center}
+.codeBox input{width:100%;background:#000;border:1px solid #ff0000;padding:14px;color:#fff;text-align:center;font-family:Orbitron;letter-spacing:8px;font-size:14px;outline:none;margin-top:15px}
+.codeBox button{width:100%;margin-top:12px;background:#ff0000;color:#fff;border:none;padding:12px;font-family:Orbitron;font-weight:900;cursor:pointer}
+.main{display:none;width:100%;max-width:700px;margin:auto;padding:0 12px 100px;max-height:100vh;overflow:auto;position:relative;z-index:20;background:transparent}
+.top{position:sticky;top:0;z-index:15;background:rgba(0,0,0,0.6);backdrop-filter:blur(8px);border-bottom:2px solid #ff0000;padding:14px;text-align:center;display:flex;justify-content:space-between;align-items:center}
+.top h1{font-family:Orbitron;color:#ff0000;font-size:10px;letter-spacing:2px;flex:1}
+.tabs{display:flex;gap:6px;margin:12px 0}
+.tab{flex:1;padding:10px;text-align:center;font-family:Orbitron;font-size:10px;cursor:pointer;border:1px solid #ff0000}
+.tab.active{background:#ff0000;color:#fff}
+.tab.inactive{background:rgba(0,0,0,0.5);color:#ff0000}
+.desc{background:rgba(0,0,0,0.5);backdrop-filter:blur(6px);border-left:4px solid #ff0000;padding:10px;font-size:10px;color:#ccc;margin-bottom:12px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+.carreau{background:rgba(15,15,15,0.65);border:1px solid rgba(255,0,0,0.4);padding:12px;border-radius:8px;backdrop-filter:blur(10px)}
+.carreau h3{font-family:Orbitron;color:#ff0000;font-size:9px;margin-bottom:8px;letter-spacing:2px}
+.textArea{width:100%;background:rgba(0,0,0,0.7);border:1px solid #333;padding:8px;color:#ddd;font-size:11px;min-height:75px;resize:none;outline:none}
+.btnMain{width:100%;background:#ff0000;color:#fff;border:none;padding:10px;font-family:Orbitron;font-weight:900;font-size:10px;cursor:pointer;margin-top:6px}
+.btnWhite{background:rgba(255,255,255,0.9);color:#ff0000;border:2px solid #ff0000}
+.btnGreen{background:#25D366;color:#fff}
+.mailSelect{width:100%;background:rgba(0,0,0,0.7);border:1px solid #ff0000;color:#ff0000;padding:8px;font-size:11px;font-family:Orbitron}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#ff0000;color:#fff;padding:10px 20px;font-family:Orbitron;font-size:10px;display:none;z-index:200}
+@media(max-width:600px){.video-bg{width:80%;height:65vh}}
+</style>
+</head>
+<body>
+<video class="video-bg" id="bgVideo" autoplay muted loop playsinline>
+<source src="https://files.catbox.moe/6ybm9v.mp4" type="video/mp4">
+</video>
+<div class="overlay" id="overlay"></div>
+
+<div class="lockScreen" id="lockScreen">
+<div class="lockTop">
+<h1>PERRY VORAX THE SUPREMARCY GENERAL OF THE SUPREMARCY VORAX EMPIRE</h1>
+<button class="soundBtn" id="soundBtnLock" onclick="toggleSound(event)">🔇 SON OFF</button>
+</div>
+<div style="flex:1"></div>
+</div>
+
+<div class="codeBox" id="codeBox">
+<h3 style="font-family:Orbitron;color:#ff0000;letter-spacing:4px;font-size:11px">🔐 CODE IMPERIAL</h3>
+<input id="codeInput" placeholder="••••••••" type="password" autocomplete="off">
+<button onclick="checkCode()">DÉVERROUILLER</button>
+<button onclick="closeCode()" style="background:#111;color:#666;border:1px solid #333">FERMER</button>
+</div>
+
+<div class="main" id="main">
+<div class="top">
+<h1>PERRY VORAX THE SUPREMARCY GENERAL OF THE SUPREMARCY VORAX EMPIRE</h1>
+<button class="soundBtn" id="soundBtnMain" onclick="toggleSound(event)">🔇 SON OFF</button>
+</div>
+<div class="content">
+<div class="tabs"><div class="tab active">ABUSE</div><div class="tab inactive">SCAM</div><div class="tab inactive">SPAM</div></div>
+<div class="desc">PORNOGRAPHIQUES, DES IMAGES DE MUTILATION ET QUI LANCE SOUVENT DES APPELS VIDEO SANS CONSENTEMENT.</div>
+<div class="grid2">
+<div class="carreau"><h3>📧 EMAIL CIBLE (3)</h3>
+<select class="mailSelect" id="mailSelect"><option>abuse@whatsapp.com</option><option>support@whatsapp.com</option><option>appeals@whatsapp.com</option></select>
+<button class="btnMain" onclick="copyMail()">📋 COPIER EMAIL</button>
+<button class="btnMain btnWhite" onclick="contactUs()">📩 CONTACT US</button>
+</div>
+<div class="carreau"><h3>📝 TEXTE SIGNALEMENT</h3>
+<textarea class="textArea" id="text1">Je signale le numéro +NUMERO pour contenu pornographique et appels vidéo sans consentement.</textarea>
+<button class="btnMain" onclick="copyText1()">📋 COPIER TEXTE</button>
+</div>
+</div>
+<div class="grid2">
+<div class="carreau"><h3>📞 TEXTE CONTACT</h3>
+<textarea class="textArea" id="text2">Bonjour WhatsApp, je signale +NUMERO pour spam abusif.</textarea>
+<button class="btnMain" onclick="copyText2()">📋 COPIER</button></div>
+<div class="carreau"><h3>💬 ASSISTANCE</h3>
+<div style="background:rgba(255,0,0,0.15);border:2px solid #ff0000;padding:12px;text-align:center">
+<div style="font-family:Orbitron;font-size:10px;color:#fff;margin-bottom:8px">+237 6 97 52 77 31</div>
+<button class="btnMain btnGreen" onclick="assistWA()">💬 WHATSAPP ASSISTANCE</button>
+<button class="btnMain btnWhite" onclick="contactUs()">📧 CONTACT NOUS</button>
+</div>
+</div>
+</div>
+<div class="carreau" style="margin-top:10px"><h3>🎯 NUMÉRO À SIGNALER (VIDE)</h3>
+<div style="display:flex;gap:6px"><input id="targetNum" placeholder="+33 / +237 / +225 / +... (vide)" style="flex:1;background:rgba(0,0,0,0.7);border:1px solid #ff0000;color:#ff0000;padding:12px;font-family:Orbitron;text-align:center" value=""><button class="btnMain" style="width:90px;margin-top:0" onclick="saveTargetNum()">OK</button></div>
+</div>
+</div>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+let SECRET_CODE='Perryvorax';let clicks=0;let isMuted=true;
+let video=document.getElementById('bgVideo');
+function toggleSound(e){if(e) e.stopPropagation();isMuted=!isMuted;video.muted=isMuted;let txt=isMuted?'🔇 SON OFF':'🔊 SON ON';document.getElementById('soundBtnLock').innerText=txt;document.getElementById('soundBtnMain').innerText=txt;toast(txt);}
+function triggerSecret(){clicks++;if(clicks>=5){document.getElementById('codeBox').style.display='block';clicks=0;}setTimeout(()=>{clicks=0;},3000);}
+document.getElementById('lockScreen').addEventListener('click',triggerSecret);
+document.getElementById('overlay').addEventListener('click',triggerSecret);
+document.getElementById('bgVideo').addEventListener('click',triggerSecret);
+function closeCode(){document.getElementById('codeBox').style.display='none';}
+function checkCode(){
+let v=document.getElementById('codeInput').value.trim();
+if(v===SECRET_CODE||v.toLowerCase()==='perryvorax'){
+document.getElementById('codeBox').style.display='none';
+document.getElementById('lockScreen').style.display='none';
+// VIDEO TOUJOURS VISIBLE - TRANSPARENT
+document.getElementById('bgVideo').style.opacity='0.75';
+document.getElementById('bgVideo').style.filter='brightness(0.7)';
+document.getElementById('overlay').style.background='rgba(0,0,0,0.25)';
+document.getElementById('main').style.display='block';
+document.body.style.overflow='auto';
+toast('EMPIRE DÉVERROUILLÉ - VIDÉO VISIBLE');
+}else{toast('CODE FAUX');}
+}
+function copyMail(){navigator.clipboard.writeText(document.getElementById('mailSelect').value);toast('Email copié');}
+function contactUs(){let m=document.getElementById('mailSelect').value;let num=document.getElementById('targetNum').value.trim()||'+NUMERO';let subj=encodeURIComponent('Signalement - '+num);let body=encodeURIComponent(document.getElementById('text1').value.replace('+NUMERO',num));window.location.href=`mailto:${m}?subject=${subj}&body=${body}`;}
+function assistWA(){let num=document.getElementById('targetNum').value.trim()||'+NUMERO';let msg=encodeURIComponent(`Bonjour Assistance Vorax, je signale ${num}`);window.open(`https://wa.me/237697527731?text=${msg}`,'_blank');}
+function copyText1(){let num=document.getElementById('targetNum').value.trim();let txt=document.getElementById('text1').value;if(num) txt=txt.replace(/\+NUMERO/g,num);navigator.clipboard.writeText(txt);toast('Copié');}
+function copyText2(){let num=document.getElementById('targetNum').value.trim();let txt=document.getElementById('text2').value;if(num) txt=txt.replace(/\+NUMERO/g,num);navigator.clipboard.writeText(txt);toast('Copié');}
+function saveTargetNum(){let v=document.getElementById('targetNum').value.trim();if(!v){toast('Entre un numéro');return;}toast('Numéro: '+v);}
+function toast(t){let e=document.getElementById('toast');e.innerText=t;e.style.display='block';setTimeout(()=>e.style.display='none',2000);}
+</script>
+</body>
+</html>
